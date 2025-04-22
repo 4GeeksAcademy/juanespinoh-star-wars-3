@@ -121,6 +121,28 @@ def add_people():
         db.session.rollback()
         return jsonify({"msg": f"Error al crear usuario: {str(e)}"}), 500
 
+@app.route('/people/<int:people_id>', methods=['GET'])
+def get_single_people(people_id):
+    try:
+        people = db.session.execute(
+            select(People).where(People.id==people_id)
+        ).scalars().first()
+
+
+        if not people:
+            return jsonify({"msg": "People no encontrado"}), 404
+        
+        
+
+        return jsonify({
+            "data": people.serialize()
+        }), 200
+    
+    except Exception as e:
+        return jsonify({
+            "msg": f"Error al obtener people: {str(e)}"
+        }), 500
+
 @app.route('/people', methods=['GET'])
 def get_people():
     try:
@@ -185,6 +207,28 @@ def add_planet():
         db.session.rollback()
         return jsonify({"msg": f"Error al crear usplanetauario: {str(e)}"}), 500
 
+@app.route('/planets/<int:planet_id>', methods=['GET'])
+def get_single_planet(planet_id):
+    try:
+        planet = db.session.execute(
+            select(Planet).where(Planet.id==planet_id)
+        ).scalars().first()
+
+
+        if not planet:
+            return jsonify({"msg": "PLaneta no encontrado"}), 404
+        
+        
+
+        return jsonify({
+            "data": planet.serialize()
+        }), 200
+    
+    except Exception as e:
+        return jsonify({
+            "msg": f"Error al obtener planet: {str(e)}"
+        }), 500
+
 @app.route('/planets', methods=['GET'])
 def get_planets():
     try:
@@ -248,6 +292,28 @@ def add_nave():
     except Exception as e:
         db.session.rollback()
         return jsonify({"msg": f"Error al crear nave: {str(e)}"}), 500
+
+@app.route('/naves/<int:nave_id>', methods=['GET'])
+def get_single_nave(nave_id):
+    try:
+        nave = db.session.execute(
+            select(Nave).where(Nave.id==nave_id)
+        ).scalars().first()
+
+
+        if not nave:
+            return jsonify({"msg": "Nave no encontrado"}), 404
+        
+        
+
+        return jsonify({
+            "data": nave.serialize()
+        }), 200
+    
+    except Exception as e:
+        return jsonify({
+            "msg": f"Error al obtener nave: {str(e)}"
+        }), 500
 
 @app.route('/naves', methods=['GET'])
 def get_naves():
